@@ -28,6 +28,11 @@ VideoPath = 'Videos/P7230137.MOV'; %path to input video
 
 
 
+%% simply averaging the frames
+
+
+
+
 
 
 
