@@ -1,9 +1,10 @@
-function [cm] = cMap(Frame,Cw)
+function [cm] = cMap(Frame,Cw, Frame_index)
 % cMap computes the contrast map of the input frame given a contrast map
 % weight.It provide a edge struction of the frame.
 % @param Frame: input video Frame
 % @param Cw: input contrast weight
 % @return cm: contrast map (edge)
+fprintf('computing contrast map from frame %d\n', Frame_index);
 kernal = fspecial('laplacian',0.2); % 2D laplacian filter with default alpha
 cm = Frame;
 cm = im2double(rgb2gray(cm)); % convert rgb frame to grayscale normalized image
