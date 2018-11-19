@@ -5,8 +5,7 @@ imtool close all;  % Close all imtool figures.
 clear;  % Erase all existing variables.
 workspace;  % Make sure the workspace panel is showing.
 fontSize = 22;
-VideoPath = 'Videos/P7230137.MOV'; %path to input video
-[Frames,info] = videoToFrames(VideoPath);
+FramesPath = ''; %path to input video
 %% image stablization
 % this section of the pipeline intends to remove the movement of the
 % background to create pre-processed frames with static background
