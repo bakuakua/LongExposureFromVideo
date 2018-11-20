@@ -1,21 +1,25 @@
-function ObjRemoval(Frames,info,ds)
+function ObjRemoval_ave(Frames,info,ds)
 % ObjRemoval detect the non moving objects as background, remove the moving
-% part. Using Gaussian model.
+% part.
 % @param Frames: An array of images
 % @para info: [height, width, numberofframes, duration] 
 % @param ds: down sample the video, only take frame for each n frames
 
 nFrames = info(3);
+average_frame = zeros(info(1),info(2),3);     % initialize average frame
+for k = 1:ds:nFrames
+    average_frame = average_frame + double(Frames(:,:,:,k));
+end
+average_frame = average_frame/(nFrames/ds);        % take average
+
+% Re-calculates the background frame and remove moving objects in the calculation
 bg_frame = zeros(info(1),info(2),3);     % initialize background frame
 pixel_sample_density = im2bw(bg_frame);  % binary value
-
-foregroundDetector = vision.ForegroundDetector('NumGaussians', 3, ...
-    'NumTrainingFrames', 50);
-
+diff_frame = zeros(info(1),info(2),3);   % initialize 
 for k = 1:ds:nFrames
-    frame = double(Frames(:,:,:,k));
-    foreground = step(foregroundDetector, frame);
-    diff_frame = 1-foreground;
+    diff_frame = imabsdiff(double(Frames(:,:,:,k)), average_frame); % absolute difference between current frame and average
+    level = graythresh(Frames(:,:,:,k));
+    diff_frame = 1-im2bw(uint8(diff_frame),level);     % substract background
     pixel_sample_density = pixel_sample_density + diff_frame;
     
     nonmoving = double(Frames(:,:,:,k));

@@ -26,14 +26,16 @@ VideoPath = 'Videos/P7230137.MOV'; %path to input video
 % this section of the pipeline intends to detect all the moving object and
 % remove them in the video.
 
-downsample = 5;                      
+downsample = 5;   
+subplot(221)
+median(Frames,info,downsample)
+title('Average Pic')
+subplot(222)
+ObjRemoval_ave(Frames,info,downsample)
+title('removed obj with average diff')
+subplot(223)
 ObjRemoval(Frames,info,downsample)
-
-
-
-
-
-
+title('removed obj with Gaussian model')
 
 
 
