@@ -1,6 +1,6 @@
 % Input video file which needs to be stabilized.
-VideoPath = 'P7230138.MOV';
-[Frames,info] = videoToFrames(VideoPath);
+%VideoPath = 'P7230138.MOV';
+%[Frames,info] = videoToFrames(VideoPath);
 %%
 %red_frames = zeros(info(1),info(2),info(3));
 %green_frames = zeros(info(1),info(2),info(3));
