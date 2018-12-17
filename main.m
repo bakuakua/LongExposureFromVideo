@@ -43,7 +43,8 @@ imshowpair(img_r,uint8(img_c), 'montage');
 %% moving object detection and removal
 % this section of the pipeline intends to detect all the moving object and
 % remove them in the video.
-downsample = 5;   
+downsample = 5;  
+figure(2)
 subplot(221)
 median(Frames_obj,info,downsample)
 title('Average Pic')
@@ -54,8 +55,7 @@ subplot(223)
 ObjRemoval(Frames_obj,info,downsample)
 title('removed obj with Gaussian model')
 %% adding weight to a moving object to make a clear long exposure photo
-
-downsample = 5; 
+subplot(224)
 weight = 5;
 addWeight(Frames_obj,info,downsample,weight)
-
+title('add weight to moving object')
