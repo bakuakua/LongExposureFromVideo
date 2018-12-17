@@ -5,8 +5,8 @@ imtool close all;  % Close all imtool figures.
 clear;  % Erase all existing variables.
 workspace;  % Make sure the workspace panel is showing.
 fontSize = 22;
-VideoPath = 'Videos/night_car2.MOV'; %path to input video
-[Frames,info] = videoToFrames(VideoPath);
+Path1 = 'Videos/night_car2.MOV'; %path to input video
+[Frames_obj,info] = videoToFrames(Path1);
 %% image stablization
 % this section of the pipeline intends to remove the movement of the
 % background to create pre-processed frames with static background
@@ -27,18 +27,18 @@ VideoPath = 'Videos/night_car2.MOV'; %path to input video
 % remove them in the video.
 downsample = 5;   
 subplot(221)
-median(Frames,info,downsample)
+median(Frames_obj,info,downsample)
 title('Average Pic')
 subplot(222)
-ObjRemoval_ave(Frames,info,downsample)
+ObjRemoval_ave(Frames_obj,info,downsample)
 title('removed obj with average diff')
 subplot(223)
-ObjRemoval(Frames,info,downsample)
+ObjRemoval(Frames_obj,info,downsample)
 title('removed obj with Gaussian model')
 %% adding weight to a moving object to make a clear long exposure photo
 
 downsample = 5; 
 weight = 5;
-addWeight(Frames,info,downsample,weight)
+addWeight(Frames_obj,info,downsample,weight)
 
 
