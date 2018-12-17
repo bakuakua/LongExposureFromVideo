@@ -15,5 +15,5 @@ Implement stabilization, exposure fusion and moving object removal using various
 
 ## Requirements
 - Matlab R2018b
-- Computer Vision System Toolbox
+- Computer Vision System Toolbox. Make sure Examples/vision/videostabilize_pm/videostabilie_pm.m is in the path.
 
