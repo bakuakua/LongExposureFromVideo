@@ -10,10 +10,12 @@ Path1 = 'Videos/night_car2.MOV'; %path to input video
 
 FramesPath = 'Videos/waterfall1'; %path to input video
 
+VideoPath = 'Videos/P7230137.MOV'; %path to input video
+%[Frames,info] = videoToFrames(VideoPath);
 %% image stablization
 % this section of the pipeline intends to remove the movement of the
 % background to create pre-processed frames with static background
-
+output = stabilization(VideoPath);
 
 
 
