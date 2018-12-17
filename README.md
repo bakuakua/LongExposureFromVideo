@@ -11,7 +11,9 @@ Creating long exposure folders with various features from a video clip
 To create a still photography with long exposure effect from a sequence of input video frames.
 Implement stabilization, exposure fusion and moving object removal using various algorithms.
 
-## Running pre-request 
+## Examples
+
+## Requirements
 - Matlab R2018b
 - Computer Vision System Toolbox
 
