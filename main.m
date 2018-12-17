@@ -40,24 +40,22 @@ title('Time lapse fused vs averaged');
 imshowpair(img_r,img_c, 'montage');
 
 
-
-% %% moving object detection and removal
-% % this section of the pipeline intends to detect all the moving object and
-% % remove them in the video.
-% downsample = 5;   
-% figure(2)
-% subplot(221)
-% median(Frames_obj,info,downsample)
-% title('Average Pic')
-% subplot(222)
-% ObjRemoval_ave(Frames_obj,info,downsample)
-% title('removed obj with average diff')
-% subplot(223)
-% ObjRemoval(Frames_obj,info,downsample)
-% title('removed obj with Gaussian model')
-% %% adding weight to a moving object to make a clear long exposure photo
-% figure(3)
-% downsample = 5; 
-% weight = 5;
-% addWeight(Frames_obj,info,downsample,weight)
-
+%% moving object detection and removal
+% this section of the pipeline intends to detect all the moving object and
+% remove them in the video.
+downsample = 5;  
+figure(2)
+subplot(221)
+median(Frames_obj,info,downsample)
+title('Average Pic')
+subplot(222)
+ObjRemoval_ave(Frames_obj,info,downsample)
+title('removed obj with average diff')
+subplot(223)
+ObjRemoval(Frames_obj,info,downsample)
+title('removed obj with Gaussian model')
+%% adding weight to a moving object to make a clear long exposure photo
+subplot(224)
+weight = 5;
+addWeight(Frames_obj,info,downsample,weight)
+title('add weight to moving object')
