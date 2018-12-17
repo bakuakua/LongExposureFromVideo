@@ -37,7 +37,7 @@ img_r = ExposureFusion(Frames,1.0,1.0,0);
 img_c = average(Frames,floor(len/ds));
 figure(1)
 title('Time lapse fused vs averaged');
-imshowpair(img_r,img_c, 'montage');
+imshowpair(img_r,uint8(img_c), 'montage');
 
 
 

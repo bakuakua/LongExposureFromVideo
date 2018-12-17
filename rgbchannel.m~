@@ -1,0 +1,64 @@
+filename = "Videos/P7230137.MOV";
+hVideoSrc = vision.VideoFileReader(filename, 'ImageColorSpace', 'RGB');
+videoCol = step(hVideoSrc);
+red_frames = videoCol(:,:,1);
+green_frames = videoCol(:,:,2);
+blue_frames = videoCol(:,:,3);
+
+count = 1;
+while ~isDone(hVideoSrc)
+    videoFrame = step(hVideoSrc);
+    count = count + 1;
+end           
+reset(hVideoSrc);
+
+output = cell(1,count);
+% Process all frames in the video
+movMean = step(hVideoSrc);
+movMean_r = movMean(:,:,1);
+movMean_g = movMean(:,:,2);
+movMean_b = movMean(:,:,3);
+
+output{1} = movMean;
+imgB_r = movMean_r;
+imgB_g = movMean_g;
+imgB_b = movMean_b;
+imgBp_r = movMean_r;
+imgBp_g = movMean_g;
+imgBp_b = movMean_b;
+
+output{2} = movMean;
+correctedMean_r = imgBp_r;
+correctedMean_g = imgBp_g;
+correctedMean_b = imgBp_b;
+
+while ~isDone(hVideoSrc) && ii < 5
+    % Read in new frame
+
+    imgA_r = imgB_r; 
+    imgA_g = imgB_g; 
+    imgA_b = imgB_b; 
+
+    imgAp_r = imgBp_r; 
+    imgAp_g = imgBp_r; 
+    imgAp_r = imgBp_r; 
+
+    imgB = step(hVideoSrc);
+    movMean = movMean + imgB;
+
+    % Estimate transform from frame A to frame B, and fit as an s-R-t
+    H = cvexEstStabilizationTform(imgA,imgB);
+    HsRt = cvexTformToSRT(H);
+    Hcumulative = HsRt * Hcumulative;
+    imgBp = imwarp(imgB,affine2d(Hcumulative),'OutputView',imref2d(size(imgB)));
+    rgbImage2 = ind2rgb(imgBp, map);
+    output{ii} = rgbImage2;
+    correctedMean = correctedMean + imgBp;   
+    ii = ii+1;
+    
+end
+
+ii = 2;
+Hcumulative = eye(3);
+
+

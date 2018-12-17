@@ -1,5 +1,5 @@
-function [output] = stabilization(VideoPath)
-hVideoSrc = vision.VideoFileReader(VideoPath, 'ImageColorSpace', 'RGB');
+filename = "Videos/P7230137.MOV";
+hVideoSrc = vision.VideoFileReader(filename, 'ImageColorSpace', 'RGB');
 videoCol = step(hVideoSrc);
 red_frames = videoCol(:,:,1);
 green_frames = videoCol(:,:,2);
@@ -19,7 +19,6 @@ movMean_r = movMean(:,:,1);
 movMean_g = movMean(:,:,2);
 movMean_b = movMean(:,:,3);
 
-movMean = im2double(movMean);
 output{1} = movMean;
 imgB_r = movMean_r;
 imgB_g = movMean_g;
@@ -37,9 +36,9 @@ Hcumulative_r = eye(3);
 Hcumulative_g = eye(3);
 Hcumulative_b = eye(3);
 
-while ~isDone(hVideoSrc) && ii < count
+while ~isDone(hVideoSrc) && ii < 5
     % Read in new frame
-    fprintf("stabilize %d frame\n",ii);
+
     imgA_r = imgB_r; 
     imgA_g = imgB_g; 
     imgA_b = imgB_b; 
@@ -73,9 +72,10 @@ while ~isDone(hVideoSrc) && ii < count
     imgBp_g = imwarp(imgB_g,affine2d(Hcumulative_g),'OutputView',imref2d(size(imgB_g)));
     imgBp_b = imwarp(imgB_b,affine2d(Hcumulative_b),'OutputView',imref2d(size(imgB_b)));
     imgout = cat(3,imgBp_r, imgBp_g, imgBp_b);
-    imgout = im2double(imgout);
     output{ii} = imgout;    
     ii = ii+1;
     
 end
+
+
 

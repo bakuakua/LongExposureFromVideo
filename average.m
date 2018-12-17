@@ -3,9 +3,11 @@ function average_frame = average(Frames,nFrames)
 % @param nFrames: number of Frames 
 % @param ds: down sample the video, only take frame for each n frames
 [h, w, c] = size(Frames{1}); 
+
 average_frame = zeros(h,w,c);     % initialize average frame
 for k = 1:nFrames
-    average_frame = average_frame + double(Frames{k});
+    average_frame = average_frame + im2double(Frames{k});
+    imshow(average_frame);
 end
-average_frame = average_frame/(nFrames); 
 
+average_frame = average_frame/(nFrames); 
