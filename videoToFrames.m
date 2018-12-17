@@ -17,4 +17,3 @@ end
 videoInfo = [videoObject.Height, videoObject.width, FrameCount, videoObject.duration];
 fprintf('video to frames completed with %d frames read into memory\n', FrameCount);
 end
-
