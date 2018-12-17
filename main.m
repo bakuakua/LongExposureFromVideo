@@ -5,7 +5,7 @@ imtool close all;  % Close all imtool figures.
 clear;  % Erase all existing variables.
 workspace;  % Make sure the workspace panel is showing.
 fontSize = 22;
-VideoPath = 'Videos/P7230137.MOV'; %path to input video
+VideoPath = 'Videos/night_car2.MOV'; %path to input video
 [Frames,info] = videoToFrames(VideoPath);
 %% image stablization
 % this section of the pipeline intends to remove the movement of the
@@ -25,7 +25,6 @@ VideoPath = 'Videos/P7230137.MOV'; %path to input video
 %% moving object detection and removal
 % this section of the pipeline intends to detect all the moving object and
 % remove them in the video.
-
 downsample = 5;   
 subplot(221)
 median(Frames,info,downsample)
@@ -36,6 +35,10 @@ title('removed obj with average diff')
 subplot(223)
 ObjRemoval(Frames,info,downsample)
 title('removed obj with Gaussian model')
+%% adding weight to a moving object to make a clear long exposure photo
 
+downsample = 5; 
+weight = 5;
+addWeight(Frames,info,downsample,weight)
 
 

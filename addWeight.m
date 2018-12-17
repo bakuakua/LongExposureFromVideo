@@ -1,9 +1,10 @@
-function ObjRemoval_ave(Frames,info,ds)
+function addWeight(Frames,info,ds,weight)
 % ObjRemoval detect the non moving objects as background, remove the moving
 % part.
 % @param Frames: An array of images
-% @para info: [height, width, number of frames, duration] 
+% @param info: [height, width, number of frames, duration] 
 % @param ds: down sample the video, only take frame for each n frames
+% @param weight: weight that add to the moving object
 
 nFrames = info(3);
 average_frame = zeros(info(1),info(2),3);     % initialize average frame
@@ -19,18 +20,17 @@ diff_frame = zeros(info(1),info(2),3);   % initialize
 for k = 1:ds:nFrames
     diff_frame = imabsdiff(double(Frames(:,:,:,k)), average_frame); % absolute difference between current frame and average
     level = graythresh(Frames(:,:,:,k));
-    diff_frame = 1-im2bw(uint8(diff_frame),level);     % substract background
+    diff_frame = im2bw(uint8(diff_frame),level);     % substract foreground
     pixel_sample_density = pixel_sample_density + diff_frame;
     
     nonmoving = double(Frames(:,:,:,k));
-    nonmoving(:,:,1) = nonmoving(:,:,1).*diff_frame; % apply background mask
-    nonmoving(:,:,2) = nonmoving(:,:,2).*diff_frame;
-    nonmoving(:,:,3) = nonmoving(:,:,3).*diff_frame;
+    nonmoving(:,:,1) = nonmoving(:,:,1) + weight*nonmoving(:,:,1).*diff_frame; % apply mask
+    nonmoving(:,:,2) = nonmoving(:,:,2) + weight*nonmoving(:,:,2).*diff_frame;
+    nonmoving(:,:,3) = nonmoving(:,:,3) + weight*nonmoving(:,:,3).*diff_frame;
     bg_frame = bg_frame + nonmoving;
 end
-bg_frame(:,:,1) = bg_frame(:,:,1)./pixel_sample_density;
-bg_frame(:,:,2) = bg_frame(:,:,2)./pixel_sample_density;
-bg_frame(:,:,3) = bg_frame(:,:,3)./pixel_sample_density;
+
+bg_frame = bg_frame/(nFrames/ds); 
 imshow(uint8(bg_frame))
 
 end
